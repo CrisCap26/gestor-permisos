@@ -1,14 +1,18 @@
 import { Card, CardBody, CardHeader, Chip, Divider } from '@nextui-org/react'
 import React from 'react'
 import Buttons from './Buttons'
+import { Empleado } from '../interfaces/Empleado';
 
-export default function CardDatosEmpleado() {
+interface DatosEmpleadoProps {
+    empleado: Empleado;
+}
+export default function CardDatosEmpleado({empleado}: DatosEmpleadoProps) {
 
     const userInfo = [
-        { label: 'Nombre:', value: 'Cristopher Herrera Perez' },
-        { label: 'Departamento:', value: 'Sistemas' },
-        { label: 'Sucursal:', value: 'Perisur' },
-        { label: 'Jefe inmediato:', value: 'Moises Velez Avila' },
+        { label: 'Nombre:', value: empleado.nombre },
+        { label: 'Departamento:', value: empleado.departamento },
+        { label: 'Sucursal:', value: empleado.sucursal },
+        { label: 'Jefe inmediato:', value: empleado.jefe},
     ];
 
     return (

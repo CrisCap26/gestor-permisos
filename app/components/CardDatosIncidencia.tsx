@@ -1,21 +1,35 @@
 import React from 'react'
 import { Card, CardBody, CardHeader, Chip, Divider, Image } from '@nextui-org/react'
+import { Incidencia } from '../interfaces/Incidencia';
+import { formatDate } from '../libs/formatFecha';
 
-export default function CardDatosIncidencia() {
+interface DatosIncidenciaProps {
+    incidencia: Incidencia;
+}
+export default function CardDatosIncidencia({incidencia}: DatosIncidenciaProps) {
+    
     const incidenciaInfo = [
-        { label: 'Tipo:', value: 'Permiso de llegar tarde' },
-        { label: 'Fecha solicitada:', value: '09/10/2024' },
-        { label: 'Comentarios:', value: 'Se me poncho la llanta en camino al trabajo' },
+        { label: 'Tipo:', value: incidencia.tipoIncidencia, isImage: false },
+        { label: 'Fecha solicitada:', value: formatDate(incidencia.fecha), isImage: false },
+        { label: 'Comentarios:', value: incidencia.observaciones, isImage: false },
         { label: 'Archivo:', value: 'https://jktornel.com.mx/wp-content/uploads/2021/03/shutterstock_1199926672.jpg', isImage: true },
     ];
 
     const incidenciaVacaciones = [
-        { label: 'Tipo:', value: 'Vacaciones' },
-        { label: 'Fecha de incio:', value: '09/10/2024' },
-        { label: 'Fecha de termino:', value: '12/10/2024' },
-        { label: 'Días disfrutados:', value: '4' },
-        { label: 'Comentarios:', value: '' },
+        { label: 'Tipo:', value: incidencia.tipoIncidencia, isImage: false },
+        { label: 'Fecha de incio:', value: formatDate(incidencia.fechaInicio), isImage: false },
+        { label: 'Fecha de termino:', value: formatDate(incidencia.fechaFin), isImage: false },
+        { label: 'Días disfrutados:', value: '4', isImage: false },
+        { label: 'Comentarios:', value: incidencia.observaciones, isImage: false },
     ];
+
+    let labels;
+    if(incidencia.tipoIncidencia === "Vacaciones") {
+        labels = incidenciaVacaciones;
+    } else {
+        labels = incidenciaInfo;
+    }
+    
 
     return (
         <div className='mt-3'>
@@ -26,7 +40,7 @@ export default function CardDatosIncidencia() {
                 <Divider />
                 <CardBody className='flex-col gap-5'>
                     {
-                        incidenciaInfo.map((info, i) => (
+                        incidenciaVacaciones.map((info, i) => (
                             <div className={info.isImage ? 'flex flex-row items-start' : 'flex flex-row items-center'} key={i}>
                                 <Chip
                                     color="primary"

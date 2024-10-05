@@ -28,7 +28,7 @@ export async function GET(request: Request, { params }: Params) {
         });
 
         if (!empleado)
-            return NextResponse.json({ message: "Note not found" }, { status: 404 });
+            return NextResponse.json({ message: "Empleado not found" }, { status: 404 });
 
         return NextResponse.json(empleado)
     } catch (error) {

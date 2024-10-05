@@ -30,7 +30,7 @@ export async function GET(request: Request, { params }: Params) {
         });
 
         if (!incidencia)
-            return NextResponse.json({ message: "Note not found" }, { status: 404 });
+            return NextResponse.json({ message: "incidencia not found" }, { status: 404 });
 
         return NextResponse.json(incidencia)
     } catch (error) {
