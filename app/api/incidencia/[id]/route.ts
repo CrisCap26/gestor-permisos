@@ -12,6 +12,7 @@ export async function GET(request: Request, { params }: Params) {
                 Id: Number(params.id)
             },
             select: {
+                Id: true,
                 fecha: true,
                 FechaInicio: true,
                 FechaFin: true,
@@ -24,6 +25,17 @@ export async function GET(request: Request, { params }: Params) {
                 nombreEmpleado: {
                     select: {
                         nombre: true,
+                        departamento: true,
+                        sucursal: {
+                            select: {
+                                nombre: true,
+                            }
+                        },
+                        jefe: {
+                            select: {
+                                nombre: true,
+                            }
+                        },
                     }
                 }
             }
@@ -32,7 +44,24 @@ export async function GET(request: Request, { params }: Params) {
         if (!incidencia)
             return NextResponse.json({ message: "incidencia not found" }, { status: 404 });
 
-        return NextResponse.json(incidencia)
+        const response = {
+            empleado: {
+                nombre: incidencia.nombreEmpleado.nombre,
+                sucursal: incidencia.nombreEmpleado.sucursal.nombre,
+                departamento: incidencia.nombreEmpleado.departamento,
+                jefe: incidencia.nombreEmpleado.jefe?.nombre,
+            },
+            incidencia: {
+                id: Number(incidencia.Id),
+                fecha: incidencia.fecha,
+                fechaInicio: incidencia.FechaInicio,
+                fechaFin: incidencia.FechaFin,
+                observaciones: incidencia.observaciones,
+                tipoIncidencia: incidencia.tipoIncidencia.descripcion,
+            }
+        }
+
+        return NextResponse.json(response)
     } catch (error) {
         if (error instanceof Error) {
             return NextResponse.json({

@@ -1,71 +1,36 @@
-//'use client'
 import Header from "../components/Header";
 import Cards from "../components/Cards";
-//import { useState } from "react";
-//import React, {useContext} from 'react';
-//import {Context} from '@/app/context/Context'
-const fetchDataIncidencia = async (idIncidencia: string) => {
-  const response = await fetch(`http://localhost:3000/api/incidencia/${idIncidencia}`);
+import { fetchDataIncidencia } from "../libs/fetchDataIncidencia";
 
-  if (!response.ok) {
-    throw new Error('Error fetching data');
-  }
+export default async function Home({ searchParams }: { searchParams: { idIncidencia: string } }) {
 
-  return response.json();
-};
+  const { idIncidencia } = searchParams;
 
-const fetchDataEmpleado = async (idEmpleado: string) => {
-  const response = await fetch(`http://localhost:3000/api/empleado/${idEmpleado}`);
-
-  if (!response.ok) {
-    throw new Error('Error fetching data');
-  }
-
-  return response.json();
-};
-
-export default async function Home({ searchParams }: { searchParams: { idIncidencia?: string; idEmpleado?: string } }) {
-
-  const { idIncidencia, idEmpleado } = searchParams;
-
-  // Aquí puedes hacer la lógica que necesites con el query
-  console.log('Query parameter:', idEmpleado, idIncidencia);
-
-  if (!idIncidencia || !idEmpleado) {
-    return <h1>Error: Faltan parámetros de ID</h1>;
+  if (!idIncidencia) {
+    return (
+      <div className='grid grid-cols-1 h-screen'>
+        <h1 className="flex justify-center self-center text-xl">Error: Faltan parámetros de ID</h1>
+      </div>
+    );
   }
 
   // Obtener datos del backend
   const dataIncidencia = await fetchDataIncidencia(idIncidencia);
-  const dataEmpleado = await fetchDataEmpleado(idEmpleado);
-  const datosEmpleadoIncidencia = {
-    empleado: {
-      nombre: dataEmpleado.nombre,
-      departamento: dataEmpleado.departamento,
-      sucursal: dataEmpleado.sucursal.nombre,
-      jefe: dataEmpleado.jefe.nombre,
-    },
-    incidencia: {
-      fecha: dataIncidencia.fecha,
-      fechaInicio: dataIncidencia.FechaInicio,
-      fechaFin: dataIncidencia.FechaFin,
-      observaciones: dataIncidencia.observaciones,
-      tipoIncidencia: dataIncidencia.tipoIncidencia.descripcion,
-    }
+
+  if (!dataIncidencia) {
+    return (
+      <div className='grid grid-cols-1 h-screen'>
+        <h1 className="flex justify-center self-center text-xl">Incidencia no encontrada</h1>
+      </div>
+    );
   }
-  console.log(datosEmpleadoIncidencia)
-  // return (
-  //   <div>
-  //     <h1>ID de Incidencia:{dataIncidencia.tipoIncidencia.descripcion}</h1>
-  //     {/* Renderiza más información aquí */}
-  //   </div>
-  // );
+  const datosEmpleadoIncidencia = dataIncidencia;
 
   return (
     <div className='md:grid md:grid-cols-1 md:h-screen'>
-      <Header fecha={dataIncidencia.fecha} />
+      <Header fecha={datosEmpleadoIncidencia.incidencia.fecha} />
       <div className=''>
-        <Cards data={datosEmpleadoIncidencia}/>
+        <Cards data={datosEmpleadoIncidencia} />
       </div>
     </div>
   );

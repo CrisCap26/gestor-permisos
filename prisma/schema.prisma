@@ -42,7 +42,7 @@ model Sucursal_principal {
 }
 
 model Empleado_incidencias {
-  Id Int @id @default(autoincrement())
+  Id BigInt @id @default(autoincrement())
   fecha DateTime
   FechaInicio DateTime
   FechaFin DateTime?

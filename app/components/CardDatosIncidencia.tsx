@@ -40,7 +40,7 @@ export default function CardDatosIncidencia({incidencia}: DatosIncidenciaProps) 
                 <Divider />
                 <CardBody className='flex-col gap-5'>
                     {
-                        incidenciaVacaciones.map((info, i) => (
+                        labels.map((info, i) => (
                             <div className={info.isImage ? 'flex flex-row items-start' : 'flex flex-row items-center'} key={i}>
                                 <Chip
                                     color="primary"
