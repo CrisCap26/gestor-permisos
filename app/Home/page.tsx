@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: { searchParams: { idInciden
     );
   }
   const datosEmpleadoIncidencia = dataIncidencia;
-
+  console.log("Empleado",datosEmpleadoIncidencia.empleado)
   return (
     <div className='md:grid md:grid-cols-1 md:h-screen'>
       <Header fecha={datosEmpleadoIncidencia.incidencia.fecha} />

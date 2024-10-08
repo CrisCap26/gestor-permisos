@@ -16,7 +16,7 @@ export default function Cards({data}: CardProps) {
                 <CardDatosIncidencia incidencia={data.incidencia} />
             </div>
 
-            <Buttons />
+            <Buttons dataEmpleado={data.empleado} />
         </div>
     )
 }

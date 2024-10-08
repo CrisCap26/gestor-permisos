@@ -26,9 +26,11 @@ model Empleado_principal {
   departamento String
   sucursal_principal_id Int
   Jefe_Empleado_Principal_id Int?
+  login_principal_id Int
 
   sucursal Sucursal_principal @relation(fields: [sucursal_principal_id], references: [id])
   jefe Empleado_principal? @relation("JefeRelation", fields: [Jefe_Empleado_Principal_id], references: [id])
+  login_principal Login_principal @relation(fields: [login_principal_id], references: [id])
 
   Empleado_principal Empleado_principal[] @relation("JefeRelation")
   Empleado_incidencias Empleado_incidencias[]
@@ -52,4 +54,12 @@ model Empleado_incidencias {
 
   tipoIncidencia empleado_catalogo_incidencias @relation(fields: [Empleado_catatalogo_incidencias_id], references: [Id])
   nombreEmpleado Empleado_principal @relation(fields: [Empleado_principal_id], references: [id])
+}
+
+model Login_principal {
+  id Int @id @default(autoincrement())
+  usuario String
+  contrasena String
+
+  Empleado_principal Empleado_principal[]
 }

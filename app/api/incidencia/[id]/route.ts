@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from '@/app/libs/prisma';
+import { hashPassword } from "@/app/libs/validationPassword";
 
 interface Params {
     params: { id: string };
@@ -36,6 +37,12 @@ export async function GET(request: Request, { params }: Params) {
                                 nombre: true,
                             }
                         },
+                        login_principal: {
+                            select: {
+                                usuario: true,
+                                contrasena: true,
+                            }
+                        }
                     }
                 }
             }
@@ -50,6 +57,8 @@ export async function GET(request: Request, { params }: Params) {
                 sucursal: incidencia.nombreEmpleado.sucursal.nombre,
                 departamento: incidencia.nombreEmpleado.departamento,
                 jefe: incidencia.nombreEmpleado.jefe?.nombre,
+                username: incidencia.nombreEmpleado.login_principal.usuario,
+                password: hashPassword(incidencia.nombreEmpleado.login_principal.contrasena),
             },
             incidencia: {
                 id: Number(incidencia.Id),

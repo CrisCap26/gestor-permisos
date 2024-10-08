@@ -1,10 +1,30 @@
 'use client'
 
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react';
-import React from 'react'
+import React, { useState } from 'react';
+import { comparePasswords } from '../libs/validationPassword';
 
-export default function ModalPassword() {
+interface modalProps {
+    userValidation: string;
+}
+
+export default function ModalPassword({userValidation}: modalProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [password, setPassword] = useState('');
+
+    const handlePasswordChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+        setPassword(e.target.value);
+    };
+
+    const handleSubmit = () => {
+        const isCorrect = comparePasswords(password, userValidation);
+        if (isCorrect) {
+            alert("Thats correct password")
+            //Cambiar estatus a true
+        } else {
+           alert("Thats incorrect password")
+        }
+    }
 
     return (
         <>
@@ -25,6 +45,7 @@ export default function ModalPassword() {
                                     label="Contraseña"
                                     placeholder="Escribe tu contraseña"
                                     type="password"
+                                    onChange={handlePasswordChange}
                                     variant="bordered"
                                 />
                             </ModalBody>
@@ -32,7 +53,7 @@ export default function ModalPassword() {
                                 <Button color="danger" variant="flat" onPress={onClose}>
                                     Cancelar
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <Button color="primary" onPress={() => { handleSubmit(); onClose(); }}>
                                    Aceptar
                                 </Button>
                             </ModalFooter>
