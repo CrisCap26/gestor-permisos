@@ -1,7 +1,7 @@
 import React from 'react'
 import CardDatosEmpleado from '../components/CardDatosEmpleado'
 import CardDatosIncidencia from '../components/CardDatosIncidencia'
-import Buttons from './Buttons'
+import ContainerButtonModal from './ContainerButtonModal'
 import { EmpleadoIncidencia } from '../interfaces/EmpleadoIncidencia'
 
 interface CardProps {
@@ -16,7 +16,7 @@ export default function Cards({data}: CardProps) {
                 <CardDatosIncidencia incidencia={data.incidencia} />
             </div>
 
-            <Buttons dataEmpleado={data.empleado} />
+            <ContainerButtonModal dataEmpleado={data.empleado} />
         </div>
     )
 }

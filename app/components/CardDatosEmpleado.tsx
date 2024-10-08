@@ -1,6 +1,5 @@
 import { Card, CardBody, CardHeader, Chip, Divider } from '@nextui-org/react'
 import React from 'react'
-import Buttons from './Buttons'
 import { Empleado } from '../interfaces/Empleado';
 
 interface DatosEmpleadoProps {
