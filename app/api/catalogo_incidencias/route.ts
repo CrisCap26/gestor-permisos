@@ -19,14 +19,13 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const { Id, descripcion } = await request.json();
-        console.log(Id, descripcion)
         const newItem = await prisma.empleado_catalogo_incidencias.create({
             data: {
                 Id: Number(Id),
                 descripcion
             }
         });
-        console.log("OLa")
+
         return NextResponse.json(newItem)
     } catch (error) {
         if (error instanceof Error) {

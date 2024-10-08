@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react';
+import { Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react';
 import React, { useState } from 'react';
 import { comparePasswords } from '../libs/validationPassword';
 import CustomButton from './CustomButton';
@@ -70,25 +70,13 @@ export default function ModalPassword({ userValidation, onPasswordValidation, ti
                                 />
                             </ModalBody>
                             <ModalFooter>
-                                {/* <Button 
-                                    color="danger" 
-                                    variant="flat" 
-                                    onPress={onClose}
-                                >
-                                    Cancelar
-                                </Button> */}
                                 <CustomButton 
                                     title='Cancelar'
                                     colorProp='danger'
                                     variantProp='flat'
                                     onPressProp={onClose}
                                 />
-                                {/* <Button 
-                                    color="primary" 
-                                    onPress={() => { handleSubmit(); onClose(); }}
-                                >
-                                    Aceptar
-                                </Button> */}
+
                                 <CustomButton 
                                     title='Aceptar'
                                     colorProp='primary'

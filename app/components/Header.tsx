@@ -1,7 +1,6 @@
 'use client'
 import { Image } from '@nextui-org/react'
 import React, { useEffect, useState } from 'react'
-//import logo from '../assets/logoJRM.png'
 import logo from '../assets/NEXTPACK_LOGO.png'
 import { HeaderProps } from '../interfaces/Header'
 import { formatDate } from '../libs/formatFecha'
@@ -13,7 +12,7 @@ export default function Header({ fecha }: HeaderProps) {
     // Actualizar isMobile cuando el componente se monta
     setIsMobile(window.innerWidth < 768);
 
-    // Opcional: agregar un listener para manejar cambios de tamaño de ventana
+    // agregar un listener para manejar cambios de tamaño de ventana
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -21,7 +20,7 @@ export default function Header({ fecha }: HeaderProps) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize); // Cleanup
   }, []);
-  //const isMobile = window.innerWidth < 768;
+  
   const fechaFormatted = formatDate(fecha)
   return (
     <header className='flex flex-row p-2 md:h-[100px]'>
