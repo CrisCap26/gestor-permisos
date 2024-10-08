@@ -2,6 +2,7 @@
 
 import { Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import { comparePasswords } from '../libs/validationPassword';
 import CustomButton from './CustomButton';
 
@@ -23,10 +24,28 @@ export default function ModalPassword({ userValidation, onPasswordValidation, ti
         const isCorrect = comparePasswords(password, userValidation);
         onPasswordValidation(isCorrect);
         if (isCorrect) {
-            alert("Thats correct password")
-            //Cambiar estatus a true
+            toast.success('Se ha guardado la respuesta a la solicitud', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+            //Cambiar estatus a true en la BD
         } else {
-            alert("Thats incorrect password")
+            toast.error('Contraseña incorrecta', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         }
     }
 
@@ -34,7 +53,7 @@ export default function ModalPassword({ userValidation, onPasswordValidation, ti
         <>
             {
                 title === "Aceptar" ?
-                    <CustomButton 
+                    <CustomButton
                         title='Aceptar'
                         classProp='w-80'
                         colorProp='success'
@@ -70,14 +89,14 @@ export default function ModalPassword({ userValidation, onPasswordValidation, ti
                                 />
                             </ModalBody>
                             <ModalFooter>
-                                <CustomButton 
+                                <CustomButton
                                     title='Cancelar'
                                     colorProp='danger'
                                     variantProp='flat'
                                     onPressProp={onClose}
                                 />
 
-                                <CustomButton 
+                                <CustomButton
                                     title='Aceptar'
                                     colorProp='primary'
                                     onPressProp={() => { handleSubmit(); onClose(); }}
