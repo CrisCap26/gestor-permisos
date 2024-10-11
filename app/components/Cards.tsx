@@ -15,7 +15,10 @@ export default function Cards({data}: CardProps) {
                 <CardDatosIncidencia incidencia={data.incidencia} />
             </div>
 
-            <ContainerButtonModal dataEmpleado={data.empleado} />
+            <ContainerButtonModal 
+                dataEmpleado={data.empleado} 
+                dataIncidencia={data.incidencia}    
+            />
         </div>
     )
 }

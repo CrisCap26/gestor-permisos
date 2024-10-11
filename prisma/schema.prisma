@@ -51,10 +51,10 @@ model Empleado_incidencias {
   observaciones String
   Empleado_catatalogo_incidencias_id Int
   Empleado_principal_id Int
-  Estatus_incidencia Boolean
-  jefe_estatus_autoriza Boolean
+  Estatus_incidencia Int
+  jefe_estatus_autoriza Int
   fecha_jefe_autoriza DateTime
-  rh_estatus_autoriza Boolean
+  rh_estatus_autoriza Int
   fecha_rh_autoriza DateTime
   path_evidencia String
 

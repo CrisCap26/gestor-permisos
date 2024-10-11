@@ -5,9 +5,9 @@ export interface Incidencia {
     fechaFin: string;
     observaciones: string;
     tipoIncidencia: string;
-    estatusIncidencia: boolean;
-    jefeEstatusAut: boolean;
+    estatusIncidencia: number;
+    jefeEstatusAut: number;
     fechaJefeAut: string;
-    rhEstatusAut: boolean;
+    rhEstatusAut: number;
     fechaRhAut: string;
 }
