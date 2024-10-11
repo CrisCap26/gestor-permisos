@@ -18,6 +18,11 @@ export async function GET(request: Request, { params }: Params) {
                 FechaInicio: true,
                 FechaFin: true,
                 observaciones: true,
+                Estatus_incidencia: true,
+                jefe_estatus_autoriza: true,
+                fecha_jefe_autoriza: true,
+                rh_estatus_autoriza: true,
+                fecha_rh_autoriza: true,
                 tipoIncidencia: {
                     select: {
                         descripcion: true,
@@ -67,6 +72,11 @@ export async function GET(request: Request, { params }: Params) {
                 fechaFin: incidencia.FechaFin,
                 observaciones: incidencia.observaciones,
                 tipoIncidencia: incidencia.tipoIncidencia.descripcion,
+                estatusIncidencia: incidencia.Estatus_incidencia,
+                jefeEstatusAut: incidencia.jefe_estatus_autoriza,
+                fechaJefeAut: incidencia.fecha_jefe_autoriza,
+                rhEstatusAut: incidencia.rh_estatus_autoriza,
+                fechaRhAut: incidencia.fecha_rh_autoriza,
             }
         }
 
