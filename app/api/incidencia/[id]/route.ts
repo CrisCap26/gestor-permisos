@@ -39,7 +39,14 @@ export async function GET(request: Request, { params }: Params) {
                         },
                         jefe: {
                             select: {
+                                id: true,
                                 nombre: true,
+                                login_principal: {
+                                    select: {
+                                        usuario: true,
+                                        contrasena: true,
+                                    }
+                                }
                             }
                         },
                         login_principal: {
@@ -64,6 +71,9 @@ export async function GET(request: Request, { params }: Params) {
                 jefe: incidencia.nombreEmpleado.jefe?.nombre,
                 username: incidencia.nombreEmpleado.login_principal.usuario,
                 password: hashPassword(incidencia.nombreEmpleado.login_principal.contrasena),
+                jefeUsername: incidencia.nombreEmpleado.jefe?.login_principal.usuario,
+                jefePassword: incidencia.nombreEmpleado.jefe?.login_principal.contrasena ? hashPassword(incidencia.nombreEmpleado.jefe?.login_principal.contrasena) : '',
+                idJefe: incidencia.nombreEmpleado.jefe?.id,
             },
             incidencia: {
                 id: Number(incidencia.Id),
