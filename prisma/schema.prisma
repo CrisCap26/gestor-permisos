@@ -34,6 +34,8 @@ model Empleado_principal {
 
   Empleado_principal Empleado_principal[] @relation("JefeRelation")
   Empleado_incidencias Empleado_incidencias[]
+
+  Empleado_accesos Empleado_accesos[]
 }
 
 model Sucursal_principal {
@@ -68,4 +70,20 @@ model Login_principal {
   contrasena String
 
   Empleado_principal Empleado_principal[]
+}
+
+model Empleado_tipo {
+  id Int @id @default(autoincrement())
+  nombre String
+
+  Empleado_accesos Empleado_accesos[]
+}
+
+model Empleado_accesos {
+  id Int @id @default(autoincrement())
+  empleado_principal_id Int
+  empleado_tipo_id Int
+
+  Empleado_principal Empleado_principal @relation(fields: [empleado_principal_id], references: [id])
+  Empleado_tipo Empleado_tipo @relation(fields: [empleado_tipo_id], references: [id])
 }
