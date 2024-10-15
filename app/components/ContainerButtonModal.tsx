@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import ModalPassword from './ModalPassword'
 import { Empleado } from '../interfaces/Empleado';
 import { Incidencia } from '../interfaces/Incidencia';
+import {Chip} from "@nextui-org/react";
+import { div } from 'framer-motion/client';
 
 interface ButtonProps {
     dataEmpleado: Empleado;
@@ -30,11 +32,29 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
 
     if (statusJefeChange !== -1 && role === '0') {
         return (
-            <div>Ya contestaste a la solicitud</div>
+            <div className='flex justify-center mb-5'>
+                <Chip 
+                    className='text-md' 
+                    color='warning' 
+                    variant='bordered'
+                    size='lg'
+                >
+                    Ya contestaste a la solicitud
+                </Chip>
+            </div>
         )
     } else if (statusRhChange !== -1 && role === '1') {
         return (
-            <div>Ya contestaste a la solicitud RH</div>
+            <div className='flex justify-center mb-5'>
+                <Chip 
+                    className='text-md' 
+                    color='warning' 
+                    variant='bordered'
+                    size='lg'
+                >
+                    Ya contestaste a la solicitud RH
+                </Chip>
+            </div>
         )
     } else {
         return (
