@@ -1,7 +1,7 @@
 const server = "http://localhost:3000/";
 //const server = "https://gqmw873x-3000.usw3.devtunnels.ms/"
 
-export const fetchDataIncidencia = async (idIncidencia: string) => {
+export const fetchDataIncidencia = async (idIncidencia: number) => {
     const response = await fetch(`http://localhost:3000/api/incidencia/${idIncidencia}`);
     if (!response.ok) {
         return response.ok;

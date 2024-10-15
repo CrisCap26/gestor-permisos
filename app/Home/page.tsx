@@ -15,7 +15,7 @@ export default async function Home({ searchParams }: { searchParams: { idInciden
   }
 
   // Obtener datos del backend
-  const dataIncidencia = await fetchDataIncidencia(idIncidencia);
+  const dataIncidencia = await fetchDataIncidencia(Number(idIncidencia));
 
   if (!dataIncidencia) {
     return (
