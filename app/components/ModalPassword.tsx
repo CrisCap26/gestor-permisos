@@ -16,6 +16,8 @@ interface modalProps {
     statusJefe: number;
     usernameJefe: string;
     role: string;
+    updateJefeStatus: (status: number) => void;
+    updateRhStatus: (status: number) => void;
 }
 
 export default function ModalPassword({
@@ -25,7 +27,9 @@ export default function ModalPassword({
     idIncidencia,
     statusJefe,
     usernameJefe,
-    role
+    role, 
+    updateJefeStatus,
+    updateRhStatus
 }: modalProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [password, setPassword] = useState('');
@@ -54,8 +58,9 @@ export default function ModalPassword({
                 response = await jefeUpdateStatus(idIncidencia, status);
                 if (response.ok) {
                     showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
+                    updateJefeStatus(response.idStatus)
                     setTimeout(() => {
-                        if (!response.idStatus) {
+                        if (response.idStatus === 0) {
                             showToast('Rechazaste la solicitud de incidencia', 'info', 4000)
                         } else {
                             showToast('Aceptaste la solicitud de incidencia', 'info', 4000)
@@ -75,6 +80,7 @@ export default function ModalPassword({
                 response = await rhUpdateStatus(idIncidencia, status);
                 if (response.ok) {
                     showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
+                    updateRhStatus(response.idStatus)
                     setTimeout(() => {
                         if (!response.idStatus) {
                             showToast('Rechazaste la solicitud de incidencia', 'info', 4000)

@@ -29,13 +29,13 @@ export async function PUT(request: Request,  { params }: Params) {
             return NextResponse.json({ message: "Hubo un problema al actualizar el status" }, { status: 404 });
         if(updateStatus.jefe_estatus_autoriza === 1) {
             return NextResponse.json({ 
-                idStatus: true, 
+                idStatus: updateStatus.jefe_estatus_autoriza, 
                 message: "Jefe aprobó incidencia",
                 ok: true
             }, { status: 200 });
         } else {
             return NextResponse.json({ 
-                idStatus: false, 
+                idStatus: updateStatus.jefe_estatus_autoriza, 
                 message: "Jefe rechazó incidencia",
                 ok: true
              }, {status: 200})

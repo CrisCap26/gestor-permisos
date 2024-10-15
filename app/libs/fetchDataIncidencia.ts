@@ -2,7 +2,9 @@ const server = "http://localhost:3000/";
 //const server = "https://gqmw873x-3000.usw3.devtunnels.ms/"
 
 export const fetchDataIncidencia = async (idIncidencia: number) => {
-    const response = await fetch(`http://localhost:3000/api/incidencia/${idIncidencia}`);
+    const response = await fetch(`http://localhost:3000/api/incidencia/${idIncidencia}`, {
+      cache: 'no-store'
+    });
     if (!response.ok) {
         return response.ok;
     }

@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: { searchParams: { idInciden
       </div>
     );
   }
-  const datosEmpleadoIncidencia = dataIncidencia;
+  const datosEmpleadoIncidencia = await dataIncidencia;
   
   return (
     <div className='md:grid md:grid-cols-1 md:h-screen'>

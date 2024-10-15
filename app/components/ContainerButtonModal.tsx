@@ -9,26 +9,30 @@ interface ButtonProps {
     dataEmpleado: Empleado;
     dataIncidencia: Incidencia;
     role: string;
-    updateData: (changeData: boolean) => void;
 }
 
-export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, role, updateData }: ButtonProps) {
+export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, role }: ButtonProps) {
     const userValidation = dataEmpleado.jefe.password;
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
+    const [statusJefeChange, setStatusJefeChange] = useState(dataIncidencia.jefeEstatusAut);
+    const [statusRhChange, setStatusRhChange] = useState(dataIncidencia.rhEstatusAut);
     const handlePasswordValidation = (isCorrect: boolean) => {
         setIsPasswordCorrect(isCorrect);
     }
 
-    const sentTwoFunc = (isCorrect: boolean) => {
-        handlePasswordValidation(isCorrect);
-        updateData(isCorrect);
+    const updateJefeStatus = (status: number) => {
+        setStatusJefeChange(status);
     }
 
-    if (dataIncidencia.jefeEstatusAut !== -1 && role === '0') {
+    const updateRhStatus = (status: number) => {
+        setStatusRhChange(status);
+    }
+
+    if (statusJefeChange !== -1 && role === '0') {
         return (
             <div>Ya contestaste a la solicitud</div>
         )
-    } else if (dataIncidencia.rhEstatusAut !== -1 && role === '1') {
+    } else if (statusRhChange !== -1 && role === '1') {
         return (
             <div>Ya contestaste a la solicitud RH</div>
         )
@@ -37,22 +41,26 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
             <div className={isPasswordCorrect ? 'hidden' : `flex gap-6 justify-center items-center p-5 mt-2`}>
                 <ModalPassword
                     userValidation={userValidation}
-                    onPasswordValidation={sentTwoFunc}
+                    onPasswordValidation={handlePasswordValidation}
                     title='Rechazar'
                     idIncidencia={dataIncidencia.id}
                     statusJefe={dataIncidencia.jefeEstatusAut}
                     usernameJefe={dataEmpleado.jefe.username}
                     role={role}
+                    updateJefeStatus={updateJefeStatus}
+                    updateRhStatus={updateRhStatus}
                 />
 
                 <ModalPassword
                     userValidation={userValidation}
-                    onPasswordValidation={sentTwoFunc}
+                    onPasswordValidation={handlePasswordValidation}
                     title='Aceptar'
                     idIncidencia={dataIncidencia.id}
                     statusJefe={dataIncidencia.jefeEstatusAut}
                     usernameJefe={dataEmpleado.jefe.username}
                     role={role}
+                    updateJefeStatus={updateJefeStatus}
+                    updateRhStatus={updateRhStatus}
                 />
             </div>
         )
