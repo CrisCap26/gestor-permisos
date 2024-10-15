@@ -2,9 +2,9 @@ import Header from "../components/Header";
 import Cards from "../components/Cards";
 import { fetchDataIncidencia } from "../libs/fetchDataIncidencia";
 
-export default async function Home({ searchParams }: { searchParams: { idIncidencia: string } }) {
+export default async function Home({ searchParams }: { searchParams: { idIncidencia: string, role: string } }) {
 
-  const { idIncidencia } = searchParams;
+  const { idIncidencia, role } = searchParams;
 
   if (!idIncidencia) {
     return (
@@ -30,7 +30,7 @@ export default async function Home({ searchParams }: { searchParams: { idInciden
     <div className='md:grid md:grid-cols-1 md:h-screen'>
       <Header fecha={datosEmpleadoIncidencia.incidencia.fecha} />
       <div className=''>
-        <Cards data={datosEmpleadoIncidencia} />
+        <Cards data={datosEmpleadoIncidencia} role={role} />
       </div>
     </div>
   );

@@ -8,10 +8,11 @@ import { Incidencia } from '../interfaces/Incidencia';
 interface ButtonProps {
     dataEmpleado: Empleado;
     dataIncidencia: Incidencia;
+    role: string;
 }
 
-export default function ContainerButtonModal({dataEmpleado, dataIncidencia}: ButtonProps) {
-    const userValidation = dataEmpleado.password;
+export default function ContainerButtonModal({dataEmpleado, dataIncidencia, role}: ButtonProps) {
+    const userValidation = dataEmpleado.jefe.password;
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
     const handlePasswordValidation = (isCorrect: boolean) => {
         setIsPasswordCorrect(isCorrect);
@@ -25,7 +26,8 @@ export default function ContainerButtonModal({dataEmpleado, dataIncidencia}: But
                 title='Rechazar'
                 idIncidencia={dataIncidencia.id}
                 statusJefe={dataIncidencia.jefeEstatusAut}
-                statusRH={dataIncidencia.rhEstatusAut}
+                usernameJefe={dataEmpleado.jefe.username}
+                role={role}
             />
 
             <ModalPassword 
@@ -34,7 +36,8 @@ export default function ContainerButtonModal({dataEmpleado, dataIncidencia}: But
                 title='Aceptar'
                 idIncidencia={dataIncidencia.id}
                 statusJefe={dataIncidencia.jefeEstatusAut}
-                statusRH={dataIncidencia.rhEstatusAut}
+                usernameJefe={dataEmpleado.jefe.username}
+                role={role}
             />
         </div>
     )

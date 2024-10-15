@@ -69,13 +69,15 @@ export async function GET(request: Request, { params }: Params) {
                 nombre: incidencia.nombreEmpleado.nombre,
                 sucursal: incidencia.nombreEmpleado.sucursal.nombre,
                 departamento: incidencia.nombreEmpleado.departamento,
-                jefe: incidencia.nombreEmpleado.jefe?.nombre,
                 username: incidencia.nombreEmpleado.login_principal.usuario,
                 password: hashPassword(incidencia.nombreEmpleado.login_principal.contrasena),
-                jefeUsername: incidencia.nombreEmpleado.jefe?.login_principal.usuario,
-                jefePassword: incidencia.nombreEmpleado.jefe?.login_principal.contrasena ? hashPassword(incidencia.nombreEmpleado.jefe?.login_principal.contrasena) : '',
-                idJefe: incidencia.nombreEmpleado.jefe?.id,
-                loginJefeId: incidencia.nombreEmpleado.jefe?.login_principal.id
+                jefe: {
+                    id: incidencia.nombreEmpleado.jefe?.id,
+                    nombre: incidencia.nombreEmpleado.jefe?.nombre,
+                    username: incidencia.nombreEmpleado.jefe?.login_principal.usuario,
+                    password: incidencia.nombreEmpleado.jefe?.login_principal.contrasena ? hashPassword(incidencia.nombreEmpleado.jefe?.login_principal.contrasena) : '',
+                    loginJefeId: incidencia.nombreEmpleado.jefe?.login_principal.id
+                }
             },
             incidencia: {
                 id: Number(incidencia.Id),
@@ -104,7 +106,7 @@ export async function GET(request: Request, { params }: Params) {
     }
 }
 
-export async function POST(request: Request,  { params }: Params) {
+export async function POST(request: Request, { params }: Params) {
     try {
         const updateStatus = await prisma.empleado_incidencias.update({
             where: { Id: Number(params.id) },

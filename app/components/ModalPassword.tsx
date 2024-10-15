@@ -1,11 +1,12 @@
 'use client'
 
-import { Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react';
+import { Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, user } from '@nextui-org/react';
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 import { comparePasswords } from '../libs/validationPassword';
 import CustomButton from './CustomButton';
 import { jefeUpdateStatus, rhUpdateStatus } from '../libs/fetchDataIncidencia';
+import { userValidationAccess } from '../libs/userValidationAccess';
+import { showToast } from './showToast';
 
 interface modalProps {
     userValidation: string;
@@ -13,19 +14,22 @@ interface modalProps {
     title: string;
     idIncidencia: number;
     statusJefe: number;
-    statusRH: number;
+    usernameJefe: string;
+    role: string;
 }
 
-export default function ModalPassword({ 
-    userValidation, 
-    onPasswordValidation, 
-    title, 
+export default function ModalPassword({
+    userValidation,
+    onPasswordValidation,
+    title,
     idIncidencia,
     statusJefe,
-    statusRH,
+    usernameJefe,
+    role
 }: modalProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
     let status = 0;
     if (title === 'Aceptar') {
         status = 1;
@@ -35,94 +39,56 @@ export default function ModalPassword({
         setPassword(e.target.value);
     };
 
+    const handleUserChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+        setUsername(e.target.value);
+    };
+
     const handleSubmit = async () => {
-        const isCorrect = comparePasswords(password, userValidation);
-        onPasswordValidation(isCorrect);
-        console.log(status, "FFFF")
-        if (isCorrect) {
-            // const response = await fetch('/api/incidencia/jefe_update_status', {
-            //     method: 'PUT',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify({
-            //         idIncidencia: idIncidencia,
-            //         status: status,
-            //     }),
-            // })
-            let response: { ok: any; idStatus: any; };
-            //response = await jefeUpdateStatus(idIncidencia, status);
-
-            if(statusJefe === -1) {
+        
+        let response: { ok: any; idStatus: any; };
+        if (statusJefe === -1 && role === "0") {
+            setUsername(usernameJefe)
+            const isCorrect: boolean = comparePasswords(password, userValidation);
+            onPasswordValidation(isCorrect);
+            if (isCorrect) {
                 response = await jefeUpdateStatus(idIncidencia, status);
+                if (response.ok) {
+                    showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
+                    setTimeout(() => {
+                        if (!response.idStatus) {
+                            showToast('Rechazaste la solicitud de incidencia', 'info', 4000)
+                        } else {
+                            showToast('Aceptaste la solicitud de incidencia', 'info', 4000)
+                        }
+                    }, 4000)
+                } else {
+                    showToast('Algo salio mal, no se pudo guardar la respuesta', 'error', 5000)
+                }
             } else {
-                response = await rhUpdateStatus(idIncidencia, status);
+                showToast('Contraseña incorrecta', 'error', 5000)
             }
-            
-            
-            //const res = await response.json();
-            console.log("ModalPassword: ", response)
-            if (response.ok) {
-                toast.success('Se ha guardado la respuesta a la solicitud', {
-                    position: "top-center",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
 
-                setTimeout(() => {
-                    if(!response.idStatus) {
-                        toast.info('Rechazaste la solicitud de incidencia', {
-                            position: "top-center",
-                            autoClose: 4000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "dark",
-                        });
-                    } else {
-                        toast.info('Aceptaste la solicitud de incidencia', {
-                            position: "top-center",
-                            autoClose: 4000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "dark",
-                        });
-                    }
-                }, 4000)
-                
-            } else {
-                toast.error('Algo salio mal, no se pudo guardar la respuesta', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
-            }
         } else {
-            toast.error('Contraseña incorrecta', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
+            const userAccess = await userValidationAccess(username, password);
+            if (userAccess) {
+                onPasswordValidation(userAccess);
+                response = await rhUpdateStatus(idIncidencia, status);
+                if (response.ok) {
+                    showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
+                    setTimeout(() => {
+                        if (!response.idStatus) {
+                            showToast('Rechazaste la solicitud de incidencia', 'info', 4000)
+                        } else {
+                            showToast('Aceptaste la solicitud de incidencia', 'info', 4000)
+                        }
+                    }, 4000)
+                } else {
+                    showToast('Algo salio mal, no se pudo guardar la respuesta', 'error', 5000)
+                }
+            } else {
+                onPasswordValidation(false);
+                showToast('Contraseña incorrecta', 'error', 5000)
+            }
         }
     }
 
@@ -154,9 +120,20 @@ export default function ModalPassword({
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col gap-1">
-                                Para {title} la solicitud escriba su contraseña
+                                Para {title} la solicitud escriba su usuario
+                                y contraseña de nextpack
                             </ModalHeader>
                             <ModalBody>
+                                {
+                                    role === "1" ?
+                                        <Input
+                                            label="Usuario"
+                                            placeholder="Escribe tu usuario"
+                                            type="text"
+                                            onChange={handleUserChange}
+                                            variant="bordered"
+                                        /> : <p>Usuario: {usernameJefe}</p>
+                                }
                                 <Input
                                     label="Contraseña"
                                     placeholder="Escribe tu contraseña"

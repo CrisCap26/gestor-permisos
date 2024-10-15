@@ -11,7 +11,7 @@ export default function CardDatosEmpleado({empleado}: DatosEmpleadoProps) {
         { label: 'Nombre:', value: empleado.nombre },
         { label: 'Departamento:', value: empleado.departamento },
         { label: 'Sucursal:', value: empleado.sucursal },
-        { label: 'Jefe inmediato:', value: empleado.jefe},
+        { label: 'Jefe inmediato:', value: empleado.jefe.nombre},
     ];
 
     return (

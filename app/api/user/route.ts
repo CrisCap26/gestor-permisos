@@ -14,21 +14,20 @@ export async function POST(request: Request) {
             select: {
                 id: true,
                 usuario: true,
-                contrasena: true
+                contrasena: true,
+                Empleado_principal: {
+                    select: {
+                        id: true,
+                    }
+                }
             }
         })
         if (!findUser)
             return NextResponse.json({ message: "Hubo un problema al actualizar el status" }, { status: 404 });
-        
-        if(findUser.length !== 0) {
-            return NextResponse.json({
-                userFound: true,
-            })
-        } else {
-            return NextResponse.json({
-                userFound: false,
-            })
+        const response = {
+            idEmpleado: findUser[0].Empleado_principal[0].id
         }
+        return NextResponse.json(response);
         
     } catch (error) {
         if (error instanceof Error) {
