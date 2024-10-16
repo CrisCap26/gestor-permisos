@@ -33,6 +33,9 @@ export const userValidationAccess = async (username: string, password: string): 
         const exists: boolean = acceso.includes(idEmpleado)
         return exists;
     } catch (error) {
-
+        console.log("Error userValidationAccess: ", error)
+        if (error instanceof Error) {
+            return false;
+        }
     }
 }

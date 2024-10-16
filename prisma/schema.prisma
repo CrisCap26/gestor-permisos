@@ -27,6 +27,7 @@ model Empleado_principal {
   sucursal_principal_id Int
   Jefe_Empleado_Principal_id Int?
   login_principal_id Int
+  celular String
 
   sucursal Sucursal_principal @relation(fields: [sucursal_principal_id], references: [id])
   jefe Empleado_principal? @relation("JefeRelation", fields: [Jefe_Empleado_Principal_id], references: [id])

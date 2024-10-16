@@ -7,6 +7,8 @@ import CustomButton from './CustomButton';
 import { jefeUpdateStatus, rhUpdateStatus } from '../libs/fetchDataIncidencia';
 import { userValidationAccess } from '../libs/userValidationAccess';
 import { showToast } from './showToast';
+import { getDataRhByAuth } from '../libs/getDataRhByAuth';
+import { sendWhatsappRh } from '../libs/sendWhatsappRh';
 
 interface modalProps {
     userValidation: string;
@@ -18,6 +20,7 @@ interface modalProps {
     role: string;
     updateJefeStatus: (status: number) => void;
     updateRhStatus: (status: number) => void;
+    nombreEmpleado: string;
 }
 
 export default function ModalPassword({
@@ -29,7 +32,8 @@ export default function ModalPassword({
     usernameJefe,
     role, 
     updateJefeStatus,
-    updateRhStatus
+    updateRhStatus, 
+    nombreEmpleado
 }: modalProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [password, setPassword] = useState('');
@@ -59,11 +63,14 @@ export default function ModalPassword({
                 if (response.ok) {
                     showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
                     updateJefeStatus(response.idStatus)
-                    setTimeout(() => {
+                    setTimeout(async () => {
                         if (response.idStatus === 0) {
                             showToast('Rechazaste la solicitud de incidencia', 'info', 4000)
                         } else {
                             showToast('Aceptaste la solicitud de incidencia', 'info', 4000)
+                            //Mandar url a RH
+                            const arrNumbers = await getDataRhByAuth();
+                            sendWhatsappRh(arrNumbers, idIncidencia, nombreEmpleado)
                         }
                     }, 4000)
                 } else {

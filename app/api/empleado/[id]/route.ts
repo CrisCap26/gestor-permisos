@@ -14,6 +14,7 @@ export async function GET(request: Request, { params }: Params) {
             select: {
                 nombre: true,
                 departamento: true,
+                celular: true,
                 sucursal: {
                     select: {
                         nombre: true,
