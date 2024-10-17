@@ -1,7 +1,8 @@
-const accesoValidarRH = 42;
+import { accesoValidarRH, baseUrl } from "./baseUrl";
+
 export const getDataRhByAuth = async (): Promise<string[]> => {
     try {
-        const resEmpleadoAcceso = await fetch(`http://localhost:3000/api/accesos`, {
+        const resEmpleadoAcceso = await fetch(`${baseUrl}/api/accesos`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -18,7 +19,7 @@ export const getDataRhByAuth = async (): Promise<string[]> => {
         const acceso: number[] = await resEmpleadoAcceso.json();
 
         const numbersRh: string[] = await Promise.all(acceso.map(async (id) => {
-            const response = await fetch(`http://localhost:3000/api/empleado/${id}`, {
+            const response = await fetch(`${baseUrl}/api/empleado/${id}`, {
                 cache: 'no-store'
             });
             

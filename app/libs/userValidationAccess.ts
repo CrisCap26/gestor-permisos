@@ -1,7 +1,8 @@
-const accesoValidarRH = 31;
+import { accesoValidarRH, baseUrl } from "./baseUrl";
+
 export const userValidationAccess = async (username: string, password: string): Promise<boolean | undefined> => {
     try {
-        const resUser = await fetch(`http://localhost:3000/api/user`, {
+        const resUser = await fetch(`${baseUrl}/api/user`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -15,7 +16,7 @@ export const userValidationAccess = async (username: string, password: string): 
             return false;
         }
         const {idEmpleado} = await resUser.json();
-        const resEmpleadoAcceso = await fetch(`http://localhost:3000/api/accesos`, {
+        const resEmpleadoAcceso = await fetch(`${baseUrl}/api/accesos`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
