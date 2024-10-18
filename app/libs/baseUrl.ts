@@ -1,7 +1,7 @@
 export const baseUrl = 
     process.env.NODE_ENV === 'development'
         ? "http://localhost:3000"
-        : "https://gqmw873x-3000.usw3.devtunnels.ms";
+        : process.env.VERCEL_URL;
 
 export const urlBot = 
     process.env.NODE_ENV === 'development'
