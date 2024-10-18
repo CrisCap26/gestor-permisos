@@ -1,7 +1,7 @@
 export const baseUrl = 
     process.env.NODE_ENV === 'development'
         ? "http://localhost:3000"
-        : process.env.VERCEL_URL;
+        : "https://gestor-permisos-dxnc.vercel.app";
 
 export const urlBot = 
     process.env.NODE_ENV === 'development'
