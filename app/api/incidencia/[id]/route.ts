@@ -106,21 +106,21 @@ export async function GET(request: Request, { params }: Params) {
     }
 }
 
-export async function POST(request: Request, { params }: Params) {
-    try {
-        const updateStatus = await prisma.empleado_incidencias.update({
-            where: { Id: Number(params.id) },
-            data: {
-                jefe_estatus_autoriza: 1
-            }
-        })
-    } catch (error) {
-        if (error instanceof Error) {
-            return NextResponse.json({
-                message: error.message
-            }, {
-                status: 500,
-            })
-        }
-    }
-}
+// export async function POST(request: Request, { params }: Params) {
+//     try {
+//         const updateStatus = await prisma.empleado_incidencias.update({
+//             where: { Id: Number(params.id) },
+//             data: {
+//                 jefe_estatus_autoriza: 1
+//             }
+//         })
+//     } catch (error) {
+//         if (error instanceof Error) {
+//             return NextResponse.json({
+//                 message: error.message
+//             }, {
+//                 status: 500,
+//             })
+//         }
+//     }
+// }

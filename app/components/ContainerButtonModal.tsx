@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ModalPassword from './ModalPassword'
 import { Empleado } from '../interfaces/Empleado';
 import { Incidencia } from '../interfaces/Incidencia';
 import {Chip} from "@nextui-org/react";
-import { div } from 'framer-motion/client';
 
 interface ButtonProps {
     dataEmpleado: Empleado;

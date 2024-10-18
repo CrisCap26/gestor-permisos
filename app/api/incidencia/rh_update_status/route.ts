@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from '@/app/libs/prisma';
 
-interface Params {
-    params: { id: string };
-}
-
 export async function PUT(request: Request) {
     try {
         const { idIncidencia, status } = await request.json();

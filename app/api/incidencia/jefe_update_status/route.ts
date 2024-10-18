@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from '@/app/libs/prisma';
 
-interface Params {
-    params: { id: string };
-}
-
-export async function PUT(request: Request,  { params }: Params) {
+export async function PUT(request: Request) {
     try {
         const { idIncidencia, status } = await request.json();
         console.log(idIncidencia, status);
@@ -18,12 +14,6 @@ export async function PUT(request: Request,  { params }: Params) {
             }
         })
 
-        // const updateStatus = await prisma.empleado_incidencias.update({
-        //     where: { Id: Number(params.id) },
-        //     data: {
-        //         jefe_estatus_autoriza: 1
-        //     }
-        // })
         console.log("Jefe Actualiza estatus: ",updateStatus)
         if (!updateStatus)
             return NextResponse.json({ message: "Hubo un problema al actualizar el status" }, { status: 404 });
