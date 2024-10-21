@@ -4,11 +4,12 @@ import { Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDis
 import React, { useState } from 'react';
 import { comparePasswords } from '../libs/validationPassword';
 import CustomButton from './CustomButton';
-import { jefeUpdateStatus, rhUpdateStatus } from '../libs/fetchDataIncidencia';
+import { incidenciaUpdateStatus, jefeUpdateStatus, rhUpdateStatus } from '../libs/fetchDataIncidencia';
 import { userValidationAccess } from '../libs/userValidationAccess';
 import { showToast } from './showToast';
 import { getDataRhByAuth } from '../libs/getDataRhByAuth';
 import { sendWhatsappRh } from '../libs/sendWhatsappRh';
+import { sendWhatsappEmpleado } from '../libs/sendWhatsappEmpleado';
 
 interface modalProps {
     userValidation: string;
@@ -22,6 +23,7 @@ interface modalProps {
     updateJefeStatus: (status: number) => void;
     updateRhStatus: (status: number) => void;
     nombreEmpleado: string;
+    numCelEmpleado: string;
 }
 
 export default function ModalPassword({
@@ -36,6 +38,7 @@ export default function ModalPassword({
     updateRhStatus,
     nombreEmpleado,
     nameJefe,
+    numCelEmpleado,
 }: modalProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [password, setPassword] = useState('');
@@ -68,6 +71,13 @@ export default function ModalPassword({
                     setTimeout(async () => {
                         if (response.idStatus === 0) {
                             showToast('Rechazaste la solicitud de incidencia', 'info', 4000)
+                            //Mandar msg a empleado de que se rechazó la solicitud
+                            const res = await sendWhatsappEmpleado(numCelEmpleado, response.idStatus, nombreEmpleado, nameJefe);
+                            if (!res) {
+                                showToast('No se pudo enviar el mensaje al empleado', 'error', 5000)
+                            } else {
+                                showToast('Se envió mensaje al empleado sobre su status', 'info', 5000)
+                            }
                         } else {
                             showToast('Aceptaste la solicitud de incidencia', 'info', 4000)
                             //Mandar url a RH
@@ -90,11 +100,25 @@ export default function ModalPassword({
                 if (response.ok) {
                     showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
                     updateRhStatus(response.idStatus)
-                    setTimeout(() => {
+                    setTimeout(async () => {
                         if (!response.idStatus) {
-                            showToast('Rechazaste la solicitud de incidencia', 'info', 4000)
+                            const res = await sendWhatsappEmpleado(numCelEmpleado, response.idStatus, nombreEmpleado, "RH");
+                            if (!res) {
+                                showToast('No se pudo enviar el mensaje al empleado', 'error', 5000)
+                            } else {
+                                showToast('Se envió mensaje al empleado sobre su status', 'info', 5000)
+                            }
                         } else {
-                            showToast('Aceptaste la solicitud de incidencia', 'info', 4000)
+                            const resIncidencia = await incidenciaUpdateStatus(idIncidencia);
+                            if (resIncidencia.idStatus) {
+                                //Enviar msg a empleado de que fue aceptada su incidencia
+                                const res = await sendWhatsappEmpleado(numCelEmpleado, response.idStatus, nombreEmpleado, "RH");
+                                if (!res) {
+                                    showToast('No se pudo enviar el mensaje al empleado', 'error', 5000)
+                                } else {
+                                    showToast('Se envió mensaje al empleado sobre su status', 'info', 5000)
+                                }
+                            }
                         }
                     }, 4000)
                 } else {

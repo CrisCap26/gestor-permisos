@@ -5,7 +5,7 @@ export const baseUrl =
 
 export const urlBot = 
     process.env.NODE_ENV === 'development'
-        ? "http://localhost:3002/nodejs/apibot/multiSendMsg"
-        : "http://bot.jrpaqueteria.mx/nodejs/apibot/multiSendMsg";
+        ? "http://localhost:3002/nodejs/apibot"
+        : "http://bot.jrpaqueteria.mx/nodejs/apibot";
 
 export const accesoValidarRH = 42;

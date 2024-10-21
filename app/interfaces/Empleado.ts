@@ -3,6 +3,7 @@ export interface Empleado {
     departamento: string;
     sucursal: string;
     password: string;
+    celular: string;
     jefe: {
         id: number;
         nombre: string;

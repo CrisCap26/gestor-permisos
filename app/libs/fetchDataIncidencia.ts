@@ -38,3 +38,16 @@ export const rhUpdateStatus = async (idIncidencia: number, status: number) => {
     }
     return response.json();
 }
+
+export const incidenciaUpdateStatus = async (idIncidencia: number) => {
+  const response = await fetch(`${baseUrl}/api/incidencia/${idIncidencia}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      return response.ok;
+    }
+    return response.json();
+}

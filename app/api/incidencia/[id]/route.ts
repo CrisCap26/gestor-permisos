@@ -32,6 +32,7 @@ export async function GET(request: Request, { params }: Params) {
                     select: {
                         nombre: true,
                         departamento: true,
+                        celular: true,
                         sucursal: {
                             select: {
                                 nombre: true,
@@ -69,6 +70,7 @@ export async function GET(request: Request, { params }: Params) {
                 nombre: incidencia.nombreEmpleado.nombre,
                 sucursal: incidencia.nombreEmpleado.sucursal.nombre,
                 departamento: incidencia.nombreEmpleado.departamento,
+                celular: incidencia.nombreEmpleado.celular,
                 username: incidencia.nombreEmpleado.login_principal.usuario,
                 password: hashPassword(incidencia.nombreEmpleado.login_principal.contrasena),
                 jefe: {
@@ -106,21 +108,38 @@ export async function GET(request: Request, { params }: Params) {
     }
 }
 
-// export async function POST(request: Request, { params }: Params) {
-//     try {
-//         const updateStatus = await prisma.empleado_incidencias.update({
-//             where: { Id: Number(params.id) },
-//             data: {
-//                 jefe_estatus_autoriza: 1
-//             }
-//         })
-//     } catch (error) {
-//         if (error instanceof Error) {
-//             return NextResponse.json({
-//                 message: error.message
-//             }, {
-//                 status: 500,
-//             })
-//         }
-//     }
-// }
+export async function PUT(request: Request, { params }: Params) {
+    try {
+        const updateStatus = await prisma.empleado_incidencias.update({
+            where: { Id: Number(params.id) },
+            data: {
+                Estatus_incidencia: 1,
+            }
+        })
+
+        if (!updateStatus)
+            return NextResponse.json({ message: "Hubo un problema al actualizar el status" }, { status: 404 });
+        if(updateStatus.Estatus_incidencia === 1) {
+            return NextResponse.json({ 
+                idStatus: true, 
+                message: "Se aprobó la incidencia",
+                ok: true
+            }, { status: 200 });
+        } else {
+            return NextResponse.json({ 
+                idStatus: false, 
+                message: "Se rechazó la incidencia",
+                ok: true
+             }, {status: 200})
+        }
+        
+    } catch (error) {
+        if (error instanceof Error) {
+            return NextResponse.json({
+                message: error.message
+            }, {
+                status: 500,
+            })
+        }
+    }
+}

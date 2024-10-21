@@ -70,6 +70,7 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
                     updateJefeStatus={updateJefeStatus}
                     updateRhStatus={updateRhStatus}
                     nombreEmpleado={dataEmpleado.nombre}
+                    numCelEmpleado={dataEmpleado.celular}
                 />
 
                 <ModalPassword
@@ -84,6 +85,7 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
                     updateJefeStatus={updateJefeStatus}
                     updateRhStatus={updateRhStatus}
                     nombreEmpleado={dataEmpleado.nombre}
+                    numCelEmpleado={dataEmpleado.celular}
                 />
             </div>
         )
