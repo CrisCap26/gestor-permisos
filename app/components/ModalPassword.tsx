@@ -17,6 +17,7 @@ interface modalProps {
     idIncidencia: number;
     statusJefe: number;
     usernameJefe: string;
+    nameJefe: string;
     role: string;
     updateJefeStatus: (status: number) => void;
     updateRhStatus: (status: number) => void;
@@ -30,10 +31,11 @@ export default function ModalPassword({
     idIncidencia,
     statusJefe,
     usernameJefe,
-    role, 
+    role,
     updateJefeStatus,
-    updateRhStatus, 
-    nombreEmpleado
+    updateRhStatus,
+    nombreEmpleado,
+    nameJefe,
 }: modalProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [password, setPassword] = useState('');
@@ -52,7 +54,7 @@ export default function ModalPassword({
     };
 
     const handleSubmit = async () => {
-        
+
         let response: { ok: boolean; idStatus: number; };
         if (statusJefe === -1 && role === "0") {
             setUsername(usernameJefe)
@@ -132,10 +134,17 @@ export default function ModalPassword({
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">
-                                Para {title} la solicitud escriba su usuario
-                                y contraseña de nextpack
-                            </ModalHeader>
+                            {
+                                role === "1" ?
+                                    <ModalHeader className="flex flex-col gap-1">
+                                        Para {title} la solicitud escriba su usuario
+                                        y contraseña de nextpack
+                                    </ModalHeader>
+                                    :
+                                    <ModalHeader className="flex flex-col gap-1">
+                                        Para {title} la solicitud escriba su contraseña de nextpack
+                                    </ModalHeader>
+                            }
                             <ModalBody>
                                 {
                                     role === "1" ?
@@ -145,7 +154,10 @@ export default function ModalPassword({
                                             type="text"
                                             onChange={handleUserChange}
                                             variant="bordered"
-                                        /> : <p>Usuario: {usernameJefe}</p>
+                                        /> : <>
+                                            <p className=''>Nombre: {nameJefe}</p>
+                                            <p className=''>Usuario: {usernameJefe}</p>
+                                        </>
                                 }
                                 <Input
                                     label="Contraseña"

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import ModalPassword from './ModalPassword'
 import { Empleado } from '../interfaces/Empleado';
 import { Incidencia } from '../interfaces/Incidencia';
-import {Chip} from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 
 interface ButtonProps {
     dataEmpleado: Empleado;
@@ -32,9 +32,9 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
     if (statusJefeChange !== -1 && role === '0') {
         return (
             <div className='flex justify-center mb-5'>
-                <Chip 
-                    className='text-md' 
-                    color='warning' 
+                <Chip
+                    className='text-md'
+                    color='warning'
                     variant='bordered'
                     size='lg'
                 >
@@ -45,9 +45,9 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
     } else if (statusRhChange !== -1 && role === '1') {
         return (
             <div className='flex justify-center mb-5'>
-                <Chip 
-                    className='text-md' 
-                    color='warning' 
+                <Chip
+                    className='text-md'
+                    color='warning'
                     variant='bordered'
                     size='lg'
                 >
@@ -65,6 +65,7 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
                     idIncidencia={dataIncidencia.id}
                     statusJefe={dataIncidencia.jefeEstatusAut}
                     usernameJefe={dataEmpleado.jefe.username}
+                    nameJefe={dataEmpleado.jefe.nombre}
                     role={role}
                     updateJefeStatus={updateJefeStatus}
                     updateRhStatus={updateRhStatus}
@@ -78,6 +79,7 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
                     idIncidencia={dataIncidencia.id}
                     statusJefe={dataIncidencia.jefeEstatusAut}
                     usernameJefe={dataEmpleado.jefe.username}
+                    nameJefe={dataEmpleado.jefe.nombre}
                     role={role}
                     updateJefeStatus={updateJefeStatus}
                     updateRhStatus={updateRhStatus}
