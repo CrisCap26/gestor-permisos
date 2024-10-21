@@ -1,5 +1,5 @@
-import { baseUrl } from "./baseUrl";
-
+//import { baseUrl } from "./baseUrl";
+const baseUrl = "https://7fdb-200-92-209-202.ngrok-free.app"
 export const fetchDataIncidencia = async (idIncidencia: number) => {
     const response = await fetch(`${baseUrl}/api/incidencia/${idIncidencia}`, {
       cache: 'no-store'
