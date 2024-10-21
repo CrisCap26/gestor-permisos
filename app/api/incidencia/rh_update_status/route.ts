@@ -17,16 +17,16 @@ export async function PUT(request: Request) {
         console.log("RH Actualiza estatus: ",updateStatus)
         if (!updateStatus)
             return NextResponse.json({ message: "Hubo un problema al actualizar el status" }, { status: 404 });
-        if(updateStatus.jefe_estatus_autoriza === 1) {
+        if(updateStatus.rh_estatus_autoriza === 1) {
             return NextResponse.json({ 
                 idStatus: true, 
-                message: "Jefe aprobó incidencia",
+                message: "RH aprobó incidencia",
                 ok: true
             }, { status: 200 });
         } else {
             return NextResponse.json({ 
                 idStatus: false, 
-                message: "Jefe rechazó incidencia",
+                message: "RH rechazó incidencia",
                 ok: true
              }, {status: 200})
         }
