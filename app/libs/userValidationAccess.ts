@@ -1,6 +1,6 @@
-//import { accesoValidarRH, baseUrl } from "./baseUrl";
-const accesoValidarRH = 42;
-const baseUrl =  "https://7fdb-200-92-209-202.ngrok-free.app"
+import { accesoValidarRH, baseUrl } from "./baseUrl";
+//const accesoValidarRH = 42;
+//const baseUrl =  "https://7fdb-200-92-209-202.ngrok-free.app"
 export const userValidationAccess = async (username: string, password: string): Promise<boolean | undefined> => {
     try {
         const resUser = await fetch(`${baseUrl}/api/user`, {

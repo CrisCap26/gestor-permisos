@@ -1,4 +1,4 @@
-import { urlBot } from "./baseUrl";
+import { urlBot, baseUrl } from "./baseUrl";
 
 export const sendWhatsappEmpleado = async (num: string, status: number, nombre: string, nombreAceptaRechaza: string) => {
     let statusText;
@@ -10,7 +10,24 @@ export const sendWhatsappEmpleado = async (num: string, status: number, nombre: 
         }
         const msg = `Hola ${nombre} tu solicitud de incidencias a nóminas fue ${statusText} por ${nombreAceptaRechaza}.`;
         console.log(num, msg)
-        const response = await fetch(`${urlBot}/sendMsg`, {
+        // const response = await fetch(`${urlBot}/sendMsg`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         waNum: num,
+        //         mensaje: msg
+        //     }),
+        // });
+        // console.log("", response)
+        // if (response.ok) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+
+        const response = await fetch(`${baseUrl}/api/sendMessage/empleado`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,8 +37,8 @@ export const sendWhatsappEmpleado = async (num: string, status: number, nombre: 
                 mensaje: msg
             }),
         });
-        console.log("", response)
-        if (response.ok) {
+
+          if (response.ok) {
             return true;
         } else {
             return false;
