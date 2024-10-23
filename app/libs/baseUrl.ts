@@ -1,6 +1,6 @@
 export const baseUrl = 
     process.env.NODE_ENV === 'development'
-        ? "https://f50f-200-92-209-202.ngrok-free.app/"
+        ? "https://nominally-thankful-narwhal.ngrok-free.app"
         : "https://gestor-permisos-dxnc.vercel.app";
 
 export const urlBot = 
