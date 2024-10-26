@@ -18,7 +18,7 @@ export default function CardDatosIncidencia({incidencia}: DatosIncidenciaProps) 
     const incidenciaInfo = [
         { label: 'Tipo:', value: incidencia.tipoIncidencia, isImage: false },
         { label: 'Status:', value: status, isImage: false },
-        { label: 'Fecha solicitada:', value: formatDate(incidencia.fecha), isImage: false },
+        { label: 'Fecha solicitada:', value: formatDate(incidencia.fechaInicio), isImage: false },
         { label: 'Comentarios:', value: incidencia.observaciones, isImage: false },
         { label: 'Archivo:', value: 'https://jktornel.com.mx/wp-content/uploads/2021/03/shutterstock_1199926672.jpg', isImage: true },
     ];
