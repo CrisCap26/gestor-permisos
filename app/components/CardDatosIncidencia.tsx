@@ -26,7 +26,7 @@ export default function CardDatosIncidencia({incidencia}: DatosIncidenciaProps) 
     const incidenciaVacaciones = [
         { label: 'Tipo:', value: incidencia.tipoIncidencia, isImage: false },
         { label: 'Status:', value: status, isImage: false },
-        { label: 'Fecha de incio:', value: formatDate(incidencia.fechaInicio), isImage: false },
+        { label: 'Fecha de inicio:', value: formatDate(incidencia.fechaInicio), isImage: false },
         { label: 'Fecha de termino:', value: formatDate(incidencia.fechaFin), isImage: false },
         { label: 'Días disfrutados:', value: '4', isImage: false },
         { label: 'Comentarios:', value: incidencia.observaciones, isImage: false },
