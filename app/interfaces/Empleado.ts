@@ -1,4 +1,5 @@
 export interface Empleado {
+    id: number;
     nombre: string;
     departamento: string;
     sucursal: string;

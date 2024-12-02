@@ -24,6 +24,8 @@ interface modalProps {
     updateRhStatus: (status: number) => void;
     nombreEmpleado: string;
     numCelEmpleado: string;
+    idEmpleado: number;
+    idJefe: number;
 }
 
 export default function ModalPassword({
@@ -39,6 +41,8 @@ export default function ModalPassword({
     nombreEmpleado,
     nameJefe,
     numCelEmpleado,
+    idEmpleado, 
+    idJefe
 }: modalProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [password, setPassword] = useState('');
@@ -60,16 +64,20 @@ export default function ModalPassword({
 
         let response: { ok: boolean; idStatus: number; };
         if (statusJefe === -1 && role === "0") {
+            let statusIncidencia = 3;
+            if(status === 1){
+                statusIncidencia = 2;
+            }
             setUsername(usernameJefe)
             const isCorrect: boolean = comparePasswords(password, userValidation);
             onPasswordValidation(isCorrect);
             if (isCorrect) {
-                response = await jefeUpdateStatus(idIncidencia, status);
+                response = await jefeUpdateStatus(idIncidencia, idJefe, statusIncidencia);
                 if (response.ok) {
                     showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
                     updateJefeStatus(response.idStatus)
                     setTimeout(async () => {
-                        if (response.idStatus === 0) {
+                        if (statusIncidencia === 3) {
                             showToast('Rechazaste la solicitud de incidencia', 'info', 4000)
                             //Mandar msg a empleado de que se rechazó la solicitud
                             const res = await sendWhatsappEmpleado(numCelEmpleado, response.idStatus, nombreEmpleado, nameJefe);
@@ -93,10 +101,15 @@ export default function ModalPassword({
             }
 
         } else {
+            let statusIncidencia = 3;
+            if(status === 1){
+                statusIncidencia = 4;
+            }
             const userAccess = await userValidationAccess(username, password);
+            //console.log(userAccess, "RHHHHH")
             if (userAccess) {
                 onPasswordValidation(userAccess);
-                response = await rhUpdateStatus(idIncidencia, status);
+                response = await rhUpdateStatus(idIncidencia, status, statusIncidencia);
                 if (response.ok) {
                     showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
                     updateRhStatus(response.idStatus)

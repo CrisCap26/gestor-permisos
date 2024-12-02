@@ -3,7 +3,7 @@ import { prisma } from '@/app/libs/prisma';
 
 export async function PUT(request: Request) {
     try {
-        const { idIncidencia, status } = await request.json();
+        const { idIncidencia, status, estatusIncidencia } = await request.json();
         console.log(idIncidencia, status);
 
         const updateStatus = await prisma.empleado_incidencias.update({
@@ -11,6 +11,7 @@ export async function PUT(request: Request) {
             data: {
                 rh_estatus_autoriza: status,
                 fecha_rh_autoriza: new Date(),
+                Estatus_incidencia: estatusIncidencia
             }
         })
 

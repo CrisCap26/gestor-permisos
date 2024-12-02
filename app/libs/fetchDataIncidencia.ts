@@ -10,13 +10,13 @@ export const fetchDataIncidencia = async (idIncidencia: number) => {
     return response.json();
 };
 
-export const jefeUpdateStatus = async (idIncidencia: number, status: number) => {
+export const jefeUpdateStatus = async (idIncidencia: number, idEmpleadoAutoriza: number, estatusIncidencia: number) => {
     const response = await fetch(`${baseUrl}/api/incidencia/jefe_update_status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ idIncidencia, status }),
+        body: JSON.stringify({ idIncidencia, idEmpleadoAutoriza, estatusIncidencia }),
       });
       if (!response.ok) {
         return response.ok;
@@ -25,13 +25,13 @@ export const jefeUpdateStatus = async (idIncidencia: number, status: number) => 
 }
 
 
-export const rhUpdateStatus = async (idIncidencia: number, status: number) => {
+export const rhUpdateStatus = async (idIncidencia: number, status: number,  estatusIncidencia: number) => {
   const response = await fetch(`${baseUrl}/api/incidencia/rh_update_status`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ idIncidencia, status }),
+      body: JSON.stringify({ idIncidencia, status, estatusIncidencia }),
     });
     if (!response.ok) {
       return response.ok;

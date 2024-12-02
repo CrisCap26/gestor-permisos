@@ -7,13 +7,16 @@ interface DatosIncidenciaProps {
     incidencia: Incidencia;
 }
 export default function CardDatosIncidencia({incidencia}: DatosIncidenciaProps) {
+    //1-Por autorizar ,2-pre Autorizada, 3-cancelada,4-autorizada
     let status: string;
     if(incidencia.estatusIncidencia === 1) {
-        status = "Aceptada";
-    } else if(incidencia.jefeEstatusAut === 0 || incidencia.rhEstatusAut === 0) {
-        status = "Rechazada";
+        status = "Por autorizar";
+    } else if(incidencia.estatusIncidencia === 2) {
+        status = "Pre autorizada";
+    } else if(incidencia.estatusIncidencia === 3) {
+        status = "Cancelada";
     } else {
-        status = "En espera";
+        status = "Autorizada"
     }
     const incidenciaInfo = [
         { label: 'Tipo:', value: incidencia.tipoIncidencia, isImage: false },
