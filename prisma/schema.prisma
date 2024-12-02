@@ -60,6 +60,8 @@ model Empleado_incidencias {
   rh_estatus_autoriza Int
   fecha_rh_autoriza DateTime?
   path_evidencia String?
+  fecha_regresa DateTime?
+  dias_disfrutados Int?
 
   tipoIncidencia empleado_catalogo_incidencias @relation(fields: [Empleado_catatalogo_incidencias_id], references: [Id])
   nombreEmpleado Empleado_principal @relation(fields: [Empleado_principal_id], references: [id])

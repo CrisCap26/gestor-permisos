@@ -23,6 +23,8 @@ export async function GET(request: Request, { params }: Params) {
                 fecha_jefe_autoriza: true,
                 rh_estatus_autoriza: true,
                 fecha_rh_autoriza: true,
+                fecha_regresa: true,
+                dias_disfrutados: true,
                 tipoIncidencia: {
                     select: {
                         descripcion: true,
@@ -93,6 +95,8 @@ export async function GET(request: Request, { params }: Params) {
                 fechaJefeAut: incidencia.fecha_jefe_autoriza,
                 rhEstatusAut: incidencia.rh_estatus_autoriza,
                 fechaRhAut: incidencia.fecha_rh_autoriza,
+                fechaRegresa: incidencia.fecha_regresa,
+                diasDisfrutados: incidencia.dias_disfrutados,
             }
         }
 

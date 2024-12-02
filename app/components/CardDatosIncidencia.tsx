@@ -31,7 +31,7 @@ export default function CardDatosIncidencia({incidencia}: DatosIncidenciaProps) 
         { label: 'Status:', value: status, isImage: false },
         { label: 'Fecha de inicio:', value: formatDate(incidencia.fechaInicio), isImage: false },
         { label: 'Fecha de termino:', value: formatDate(incidencia.fechaFin), isImage: false },
-        { label: 'Días disfrutados:', value: '4', isImage: false },
+        { label: 'Días disfrutados:', value: incidencia.diasDisfrutados, isImage: false },
         { label: 'Comentarios:', value: incidencia.observaciones, isImage: false },
     ];
 

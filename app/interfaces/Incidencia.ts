@@ -10,4 +10,6 @@ export interface Incidencia {
     fechaJefeAut: string;
     rhEstatusAut: number;
     fechaRhAut: string;
+    fechaRegresa: string;
+    diasDisfrutados: string;
 }
