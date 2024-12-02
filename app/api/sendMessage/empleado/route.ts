@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
     try {
         const { waNum, mensaje } = await request.json();
-        console.log(waNum, mensaje);
+        console.log("cel: ",waNum, mensaje);
 
         const response = await fetch('http://bot.jrpaqueteria.mx/nodejs/apibot/sendMsg', {
             method: 'POST',

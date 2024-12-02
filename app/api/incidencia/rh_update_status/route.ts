@@ -3,13 +3,13 @@ import { prisma } from '@/app/libs/prisma';
 
 export async function PUT(request: Request) {
     try {
-        const { idIncidencia, status, estatusIncidencia } = await request.json();
-        console.log(idIncidencia, status);
+        const { idIncidencia, idEmpleadoRH, estatusIncidencia } = await request.json();
+        console.log("route rh: ",idIncidencia, idEmpleadoRH, estatusIncidencia);
 
         const updateStatus = await prisma.empleado_incidencias.update({
             where: { Id: Number(idIncidencia) },
             data: {
-                rh_estatus_autoriza: status,
+                rh_estatus_autoriza: idEmpleadoRH,
                 fecha_rh_autoriza: new Date(),
                 Estatus_incidencia: estatusIncidencia
             }
@@ -18,7 +18,7 @@ export async function PUT(request: Request) {
         console.log("RH Actualiza estatus: ",updateStatus)
         if (!updateStatus)
             return NextResponse.json({ message: "Hubo un problema al actualizar el status" }, { status: 404 });
-        if(updateStatus.rh_estatus_autoriza === 1) {
+        if(updateStatus.Estatus_incidencia !== 3) {
             return NextResponse.json({ 
                 idStatus: true, 
                 message: "RH aprobó incidencia",

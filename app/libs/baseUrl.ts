@@ -8,4 +8,4 @@ export const urlBot =
         ? "http://bot.jrpaqueteria.mx/nodejs/apibot"
         : "http://bot.jrpaqueteria.mx/nodejs/apibot";
 
-export const accesoValidarRH = 42;
+export const accesoValidarRH = 43;

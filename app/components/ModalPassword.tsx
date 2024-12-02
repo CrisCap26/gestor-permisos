@@ -22,9 +22,10 @@ interface modalProps {
     role: string;
     updateJefeStatus: (status: number) => void;
     updateRhStatus: (status: number) => void;
+    updateStatusIncidencia: (status: number) => void;
     nombreEmpleado: string;
     numCelEmpleado: string;
-    idEmpleado: number;
+    statusActualIncidencia: number;
     idJefe: number;
 }
 
@@ -38,10 +39,11 @@ export default function ModalPassword({
     role,
     updateJefeStatus,
     updateRhStatus,
+    updateStatusIncidencia,
     nombreEmpleado,
     nameJefe,
     numCelEmpleado,
-    idEmpleado, 
+    statusActualIncidencia, 
     idJefe
 }: modalProps) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -63,7 +65,7 @@ export default function ModalPassword({
     const handleSubmit = async () => {
 
         let response: { ok: boolean; idStatus: number; };
-        if (statusJefe === -1 && role === "0") {
+        if (statusJefe === 0 && role === "0") {
             let statusIncidencia = 3;
             if(status === 1){
                 statusIncidencia = 2;
@@ -76,6 +78,7 @@ export default function ModalPassword({
                 if (response.ok) {
                     showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
                     updateJefeStatus(response.idStatus)
+                    updateStatusIncidencia(statusIncidencia)
                     setTimeout(async () => {
                         if (statusIncidencia === 3) {
                             showToast('Rechazaste la solicitud de incidencia', 'info', 4000)
@@ -90,7 +93,7 @@ export default function ModalPassword({
                             showToast('Aceptaste la solicitud de incidencia', 'info', 4000)
                             //Mandar url a RH
                             const arrNumbers = await getDataRhByAuth();
-                            sendWhatsappRh(arrNumbers, idIncidencia, nombreEmpleado)
+                            sendWhatsappRh(['3322379413'], idIncidencia, nombreEmpleado)
                         }
                     }, 4000)
                 } else {
@@ -107,12 +110,13 @@ export default function ModalPassword({
             }
             const userAccess = await userValidationAccess(username, password);
             //console.log(userAccess, "RHHHHH")
-            if (userAccess) {
-                onPasswordValidation(userAccess);
-                response = await rhUpdateStatus(idIncidencia, status, statusIncidencia);
+            if (userAccess?.exists) {
+                onPasswordValidation(userAccess.exists);
+                response = await rhUpdateStatus(idIncidencia, userAccess.idEmpleado, statusIncidencia);
                 if (response.ok) {
                     showToast('Se ha guardado la respuesta a la solicitud', 'success', 3000)
                     updateRhStatus(response.idStatus)
+                    updateStatusIncidencia(statusIncidencia)
                     setTimeout(async () => {
                         if (!response.idStatus) {
                             const res = await sendWhatsappEmpleado(numCelEmpleado, response.idStatus, nombreEmpleado, "RH");
@@ -122,8 +126,8 @@ export default function ModalPassword({
                                 showToast('Se envió mensaje al empleado sobre su status', 'info', 5000)
                             }
                         } else {
-                            const resIncidencia = await incidenciaUpdateStatus(idIncidencia);
-                            if (resIncidencia.idStatus) {
+                            //const resIncidencia = await incidenciaUpdateStatus(idIncidencia);
+                            //if (resIncidencia.idStatus) {
                                 //Enviar msg a empleado de que fue aceptada su incidencia
                                 const res = await sendWhatsappEmpleado(numCelEmpleado, response.idStatus, nombreEmpleado, "RH");
                                 if (!res) {
@@ -131,7 +135,7 @@ export default function ModalPassword({
                                 } else {
                                     showToast('Se envió mensaje al empleado sobre su status', 'info', 5000)
                                 }
-                            }
+                            //}
                         }
                     }, 4000)
                 } else {

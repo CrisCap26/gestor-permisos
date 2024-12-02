@@ -10,9 +10,10 @@ interface ButtonProps {
     dataEmpleado: Empleado;
     dataIncidencia: Incidencia;
     role: string;
+    updateStatusIncidencia: (status: number) => void;
 }
 
-export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, role }: ButtonProps) {
+export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, role, updateStatusIncidencia }: ButtonProps) {
     const userValidation = dataEmpleado.jefe.password;
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
     const [statusJefeChange, setStatusJefeChange] = useState(dataIncidencia.jefeEstatusAut);
@@ -29,7 +30,8 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
         setStatusRhChange(status);
     }
 
-    if (statusJefeChange !== -1 && role === '0') {
+    //Si es igual a 0 es porque no ha contestado
+    if (statusJefeChange !== 0 && role === '0') {
         return (
             <div className='flex justify-center mb-5'>
                 <Chip
@@ -42,7 +44,7 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
                 </Chip>
             </div>
         )
-    } else if (statusRhChange !== -1 && role === '1') {
+    } else if (statusRhChange !== 0 && role === '1') {
         return (
             <div className='flex justify-center mb-5'>
                 <Chip
@@ -69,9 +71,10 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
                     role={role}
                     updateJefeStatus={updateJefeStatus}
                     updateRhStatus={updateRhStatus}
+                    updateStatusIncidencia={updateStatusIncidencia}
                     nombreEmpleado={dataEmpleado.nombre}
                     numCelEmpleado={dataEmpleado.celular}
-                    idEmpleado={dataEmpleado.id}
+                    statusActualIncidencia={dataEmpleado.id}
                     idJefe={dataEmpleado.jefe.id}
                 />
 
@@ -86,9 +89,10 @@ export default function ContainerButtonModal({ dataEmpleado, dataIncidencia, rol
                     role={role}
                     updateJefeStatus={updateJefeStatus}
                     updateRhStatus={updateRhStatus}
+                    updateStatusIncidencia={updateStatusIncidencia}
                     nombreEmpleado={dataEmpleado.nombre}
                     numCelEmpleado={dataEmpleado.celular}
-                    idEmpleado={dataEmpleado.id}
+                    statusActualIncidencia={dataEmpleado.id}
                     idJefe={dataEmpleado.jefe.id}
                 />
             </div>

@@ -25,13 +25,13 @@ export const jefeUpdateStatus = async (idIncidencia: number, idEmpleadoAutoriza:
 }
 
 
-export const rhUpdateStatus = async (idIncidencia: number, status: number,  estatusIncidencia: number) => {
+export const rhUpdateStatus = async (idIncidencia: number, idEmpleadoRH: number,  estatusIncidencia: number) => {
   const response = await fetch(`${baseUrl}/api/incidencia/rh_update_status`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ idIncidencia, status, estatusIncidencia }),
+      body: JSON.stringify({ idIncidencia, idEmpleadoRH, estatusIncidencia }),
     });
     if (!response.ok) {
       return response.ok;
